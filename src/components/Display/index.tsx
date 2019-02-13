@@ -4,19 +4,19 @@ import numeral from 'numeral';
 import { Theme } from '../../theme';
 
 interface DisplayProps {
-  value: number;
+  value: string;
 }
 
 type WrapperProps = ThemedStyledProps<
   {
-    value: number;
+    value: string;
   },
   Theme
 >;
 
 /** TODO: Test this out to figure out the correct lengths and font sizes */
-const getFontSize = (value: number) => {
-  const len = value.toString().length;
+const getFontSize = (value: string) => {
+  const len = value.length;
 
   if (len < 12) return 44;
   if (len < 18) return 36;
@@ -26,8 +26,8 @@ const getFontSize = (value: number) => {
 };
 
 /** TODO: We're gonna use the final length size as the condition here */
-const formatValue = (value: number) => {
-  const len = value.toString().length;
+const formatValue = (value: string) => {
+  const len = value.length;
   return len > 24 ? numeral(value).format('0.000000e+0') : value;
 };
 
