@@ -14,21 +14,21 @@ type WrapperProps = ThemedStyledProps<
   Theme
 >;
 
-/** TODO: Test this out to figure out the correct lengths and font sizes */
 const getFontSize = (value: string) => {
   const len = value.length;
 
-  if (len < 12) return 44;
-  if (len < 18) return 36;
-  if (len < 24) return 24;
+  if (len < 10) return 44;
+  if (len < 16) return 30;
+  if (len < 23) return 20;
+  if (len < 30) return 16;
+  if (len < 40) return 12;
 
-  return 18;
+  return 9;
 };
 
-/** TODO: We're gonna use the final length size as the condition here */
 const formatValue = (value: string) => {
   const len = value.length;
-  return len > 24 ? numeral(value).format('0.000000e+0') : value;
+  return len > 50 ? numeral(value).format('0.00000000e+0') : value;
 };
 
 const Wrapper = styled.div`
@@ -39,8 +39,9 @@ const Wrapper = styled.div`
   text-align: right;
 `;
 
-const Display = ({ value }: DisplayProps) => (
-  <Wrapper value={value}>{formatValue(value)}</Wrapper>
-);
+const Display = ({ value }: DisplayProps) => {
+  const formattedValue = formatValue(value);
+  return <Wrapper value={formattedValue}>{formattedValue}</Wrapper>;
+};
 
 export default Display;
