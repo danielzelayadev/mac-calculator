@@ -26,7 +26,9 @@ const MacCalculator = () => {
 
   useEffect(() => {
     const handleKeydown = ({ which }: KeyboardEvent) => {
-      if (which === 8) {
+      const isBackspace = which === 8;
+
+      if (isBackspace) {
         if (displayValue.length > 1)
           setDisplayValue(displayValue.substr(0, displayValue.length - 1));
         else if (displayValue !== '0') setDisplayValue('0');
