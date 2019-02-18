@@ -14,10 +14,13 @@ const MacCalculator = () => {
   useEffect(() => {
     const handleKeypress = ({ which, key }: KeyboardEvent) => {
       const isNumber = which >= 48 && which <= 57;
+      const isC = key === 'c' || key === 'C';
 
       if (isNumber) {
         if (displayValue === '0') setDisplayValue(key);
         else setDisplayValue(`${displayValue}${key}`);
+      } else if (isC) {
+        setDisplayValue('0');
       }
     };
     window.addEventListener('keypress', handleKeypress);
