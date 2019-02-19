@@ -50,16 +50,22 @@ const MacCalculator = () => {
     if (displayValue[0] === '-') setDisplayValue(displayValue.substr(1));
     else setDisplayValue(`-${displayValue}`);
   };
+  const handlePercent = () => {
+    const result = Number(displayValue) / 100;
+    setDisplayValue(result.toString());
+  };
 
   useEffect(() => {
     const handleKeypress = ({ which, key }: KeyboardEvent) => {
       const isNumber = which >= 48 && which <= 57;
       const isC = key === 'c' || key === 'C';
       const isDot = key === '.';
+      const isPercent = key === '%';
 
       if (isNumber) handleNumber(key);
       else if (isC) handleClear();
       else if (isDot) handleDot();
+      else if (isPercent) handlePercent();
     };
     window.addEventListener('keypress', handleKeypress);
     return () => window.removeEventListener('keypress', handleKeypress);
@@ -103,6 +109,7 @@ const MacCalculator = () => {
             bgColor={initialControlsBgColor}
             column={3}
             row={1}
+            onClick={handlePercent}
           >
             %
           </Control>
