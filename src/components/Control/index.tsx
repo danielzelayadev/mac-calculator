@@ -1,6 +1,8 @@
+import React from 'react';
 import styled, { StyledProps } from 'styled-components';
+import { omit } from 'ramda';
 
-type Props = StyledProps<{
+type CommonProps = {
   column: number;
   row: number;
   activeBgColor?: string;
@@ -8,12 +10,15 @@ type Props = StyledProps<{
   columnCount?: number;
   rowCount?: number;
   textColor?: string;
-  tooltip?: string;
-  onClick?: Function;
-}>;
+};
+type Props = {
+  children: string;
+  onClick?: (char: string) => void;
+} & CommonProps;
+type WrapperProps = StyledProps<CommonProps>;
 
-const Control = styled.div`
-  ${(props: Props) => `
+const Wrapper = styled.div`
+  ${(props: WrapperProps) => `
     background-color: ${props.bgColor || '#777'};
     color: ${props.textColor || '#fff'};
     grid-column: ${props.column};
@@ -29,5 +34,14 @@ const Control = styled.div`
   height: 71px;
   text-align: center;
 `;
+
+const Control = (props: Props) => (
+  <Wrapper
+    {...omit(['children', 'onClick'], props)}
+    onClick={() => props.onClick && props.onClick(props.children)}
+  >
+    {props.children}
+  </Wrapper>
+);
 
 export default Control;

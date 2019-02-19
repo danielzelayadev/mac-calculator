@@ -26,19 +26,35 @@ const MacCalculator = () => {
   const operatorColumnActiveBgColor = '#d97f00';
   const operatorColumnBgColor = 'orange';
 
+  const handleNumber = (num: string) => {
+    if (displayValue === '0') setDisplayValue(num);
+    else setDisplayValue(`${displayValue}${num}`);
+    if (allClear) setAllClear(false);
+  };
+  const handleClear = () => {
+    if (allClear) return;
+    setDisplayValue('0');
+    setAllClear(true);
+  };
+  const handleDot = () => {
+    if (displayValue.includes('.')) return;
+    setDisplayValue(`${displayValue}.`);
+  };
+  const handleDelete = () => {
+    if (displayValue.length > 1)
+      setDisplayValue(displayValue.substr(0, displayValue.length - 1));
+    else if (displayValue !== '0') setDisplayValue('0');
+  };
+
   useEffect(() => {
     const handleKeypress = ({ which, key }: KeyboardEvent) => {
       const isNumber = which >= 48 && which <= 57;
       const isC = key === 'c' || key === 'C';
+      const isDot = key === '.';
 
-      if (isNumber) {
-        if (displayValue === '0') setDisplayValue(key);
-        else setDisplayValue(`${displayValue}${key}`);
-        if (allClear) setAllClear(false);
-      } else if (!allClear && isC) {
-        setDisplayValue('0');
-        setAllClear(true);
-      }
+      if (isNumber) handleNumber(key);
+      else if (isC) handleClear();
+      else if (isDot) handleDot();
     };
     window.addEventListener('keypress', handleKeypress);
     return () => window.removeEventListener('keypress', handleKeypress);
@@ -47,12 +63,7 @@ const MacCalculator = () => {
   useEffect(() => {
     const handleKeydown = ({ which }: KeyboardEvent) => {
       const isBackspace = which === 8;
-
-      if (isBackspace) {
-        if (displayValue.length > 1)
-          setDisplayValue(displayValue.substr(0, displayValue.length - 1));
-        else if (displayValue !== '0') setDisplayValue('0');
-      }
+      if (isBackspace) handleDelete();
     };
 
     window.addEventListener('keydown', handleKeydown);
@@ -69,6 +80,7 @@ const MacCalculator = () => {
             bgColor={initialControlsBgColor}
             column={1}
             row={1}
+            onClick={handleClear}
           >
             {allClear ? 'AC' : 'C'}
           </Control>
@@ -96,13 +108,13 @@ const MacCalculator = () => {
           >
             ÷
           </Control>
-          <Control column={1} row={2}>
+          <Control onClick={handleNumber} column={1} row={2}>
             7
           </Control>
-          <Control column={2} row={2}>
+          <Control onClick={handleNumber} column={2} row={2}>
             8
           </Control>
-          <Control column={3} row={2}>
+          <Control onClick={handleNumber} column={3} row={2}>
             9
           </Control>
           <Control
@@ -113,13 +125,13 @@ const MacCalculator = () => {
           >
             x
           </Control>
-          <Control column={1} row={3}>
+          <Control onClick={handleNumber} column={1} row={3}>
             4
           </Control>
-          <Control column={2} row={3}>
+          <Control onClick={handleNumber} column={2} row={3}>
             5
           </Control>
-          <Control column={3} row={3}>
+          <Control onClick={handleNumber} column={3} row={3}>
             6
           </Control>
           <Control
@@ -130,13 +142,13 @@ const MacCalculator = () => {
           >
             -
           </Control>
-          <Control column={1} row={4}>
+          <Control onClick={handleNumber} column={1} row={4}>
             1
           </Control>
-          <Control column={2} row={4}>
+          <Control onClick={handleNumber} column={2} row={4}>
             2
           </Control>
-          <Control column={3} row={4}>
+          <Control onClick={handleNumber} column={3} row={4}>
             3
           </Control>
           <Control
@@ -147,10 +159,15 @@ const MacCalculator = () => {
           >
             +
           </Control>
-          <BottomLeftControl column={1} row={5} columnCount={2}>
+          <BottomLeftControl
+            onClick={handleNumber}
+            column={1}
+            row={5}
+            columnCount={2}
+          >
             0
           </BottomLeftControl>
-          <Control column={3} row={5}>
+          <Control column={3} row={5} onClick={handleDot}>
             .
           </Control>
           <BottomRightControl
