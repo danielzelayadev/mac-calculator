@@ -10,17 +10,19 @@ const Wrapper = styled.div`
   border-radius: 4px;
 `;
 
-const LeftBorderControl = styled(Control)`
+const BottomLeftControl = styled(Control)`
   border-bottom-left-radius: 4px;
 `;
 
-const RightBorderControl = styled(Control)`
+const BottomRightControl = styled(Control)`
   border-bottom-right-radius: 4px;
 `;
 
 const MacCalculator = () => {
   const [displayValue, setDisplayValue] = useState('0');
   const initialControlsBgColor = '#555';
+  const initialControlsActiveBgColor = '#777';
+  const operatorColumnActiveBgColor = '#d97f00';
   const operatorColumnBgColor = 'orange';
 
   useEffect(() => {
@@ -59,16 +61,36 @@ const MacCalculator = () => {
       <Wrapper>
         <Display value={displayValue} />
         <ControlGrid>
-          <Control bgColor={initialControlsBgColor} column={1} row={1}>
+          <Control
+            activeBgColor={initialControlsActiveBgColor}
+            bgColor={initialControlsBgColor}
+            column={1}
+            row={1}
+          >
             AC
           </Control>
-          <Control bgColor={initialControlsBgColor} column={2} row={1}>
+          <Control
+            activeBgColor={initialControlsActiveBgColor}
+            bgColor={initialControlsBgColor}
+            column={2}
+            row={1}
+          >
             +/-
           </Control>
-          <Control bgColor={initialControlsBgColor} column={3} row={1}>
+          <Control
+            activeBgColor={initialControlsActiveBgColor}
+            bgColor={initialControlsBgColor}
+            column={3}
+            row={1}
+          >
             %
           </Control>
-          <Control bgColor={operatorColumnBgColor} column={4} row={1}>
+          <Control
+            activeBgColor={operatorColumnActiveBgColor}
+            bgColor={operatorColumnBgColor}
+            column={4}
+            row={1}
+          >
             ÷
           </Control>
           <Control column={1} row={2}>
@@ -80,7 +102,12 @@ const MacCalculator = () => {
           <Control column={3} row={2}>
             9
           </Control>
-          <Control bgColor={operatorColumnBgColor} column={4} row={2}>
+          <Control
+            activeBgColor={operatorColumnActiveBgColor}
+            bgColor={operatorColumnBgColor}
+            column={4}
+            row={2}
+          >
             x
           </Control>
           <Control column={1} row={3}>
@@ -92,7 +119,12 @@ const MacCalculator = () => {
           <Control column={3} row={3}>
             6
           </Control>
-          <Control bgColor={operatorColumnBgColor} column={4} row={3}>
+          <Control
+            activeBgColor={operatorColumnActiveBgColor}
+            bgColor={operatorColumnBgColor}
+            column={4}
+            row={3}
+          >
             -
           </Control>
           <Control column={1} row={4}>
@@ -104,25 +136,28 @@ const MacCalculator = () => {
           <Control column={3} row={4}>
             3
           </Control>
-          <Control bgColor={operatorColumnBgColor} column={4} row={4}>
+          <Control
+            activeBgColor={operatorColumnActiveBgColor}
+            bgColor={operatorColumnBgColor}
+            column={4}
+            row={4}
+          >
             +
           </Control>
-          <Control bgColor={initialControlsBgColor} column={1} row={1}>
-            AC
-          </Control>
-          <LeftBorderControl column={1} row={5} columnCount={2}>
+          <BottomLeftControl column={1} row={5} columnCount={2}>
             0
-          </LeftBorderControl>
+          </BottomLeftControl>
           <Control column={3} row={5}>
             .
           </Control>
-          <RightBorderControl
+          <BottomRightControl
+            activeBgColor={operatorColumnActiveBgColor}
             bgColor={operatorColumnBgColor}
             column={4}
             row={5}
           >
             =
-          </RightBorderControl>
+          </BottomRightControl>
         </ControlGrid>
       </Wrapper>
     </ThemeProvider>

@@ -3,6 +3,7 @@ import styled, { StyledProps } from 'styled-components';
 type Props = StyledProps<{
   column: number;
   row: number;
+  activeBgColor?: string;
   bgColor?: string;
   columnCount?: number;
   rowCount?: number;
@@ -19,6 +20,9 @@ const Control = styled.div`
     grid-row: ${props.row};
     grid-column-end: ${props.column + (props.columnCount || 1)};
     grid-row-end: ${props.row + (props.rowCount || 1)};
+    &:active {
+      background-color: ${props.activeBgColor || '#ccc'};
+    }
   `}
   font-size: 24px;
   line-height: 71px;
