@@ -20,6 +20,7 @@ const BottomRightControl = styled(Control)`
 
 const MacCalculator = () => {
   const [displayValue, setDisplayValue] = useState('0');
+  const [allClear, setAllClear] = useState(true);
   const initialControlsBgColor = '#555';
   const initialControlsActiveBgColor = '#777';
   const operatorColumnActiveBgColor = '#d97f00';
@@ -33,8 +34,10 @@ const MacCalculator = () => {
       if (isNumber) {
         if (displayValue === '0') setDisplayValue(key);
         else setDisplayValue(`${displayValue}${key}`);
-      } else if (isC) {
+        if (allClear) setAllClear(false);
+      } else if (!allClear && isC) {
         setDisplayValue('0');
+        setAllClear(true);
       }
     };
     window.addEventListener('keypress', handleKeypress);
@@ -67,7 +70,7 @@ const MacCalculator = () => {
             column={1}
             row={1}
           >
-            AC
+            {allClear ? 'AC' : 'C'}
           </Control>
           <Control
             activeBgColor={initialControlsActiveBgColor}
