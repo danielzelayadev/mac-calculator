@@ -35,6 +35,7 @@ const Wrapper = styled.div`
   color: #fff;
   font-family: ${({ theme }: WrapperProps) => theme.fontFamily};
   font-size: ${({ value }: WrapperProps) => getFontSize(value)}px;
+  min-height: 72px;
   padding: 30px 18px 7px 18px;
   text-align: right;
 `;
