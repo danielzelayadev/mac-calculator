@@ -9,6 +9,7 @@ const ControlGrid = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-gap: 1px;
+  padding: 1px;
 `;
 
 export default ControlGrid;
