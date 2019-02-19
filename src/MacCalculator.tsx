@@ -45,6 +45,11 @@ const MacCalculator = () => {
       setDisplayValue(displayValue.substr(0, displayValue.length - 1));
     else if (displayValue !== '0') setDisplayValue('0');
   };
+  const handleNegation = () => {
+    if (Number(displayValue) === 0) return;
+    if (displayValue[0] === '-') setDisplayValue(displayValue.substr(1));
+    else setDisplayValue(`-${displayValue}`);
+  };
 
   useEffect(() => {
     const handleKeypress = ({ which, key }: KeyboardEvent) => {
@@ -89,6 +94,7 @@ const MacCalculator = () => {
             bgColor={initialControlsBgColor}
             column={2}
             row={1}
+            onClick={handleNegation}
           >
             +/-
           </Control>
