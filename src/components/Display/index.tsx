@@ -32,17 +32,25 @@ const formatValue = (value: string) => {
 };
 
 const Wrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
   color: #fff;
   font-family: ${({ theme }: WrapperProps) => theme.fontFamily};
   font-size: ${({ value }: WrapperProps) => getFontSize(value)}px;
-  min-height: 72px;
+  height: 72px;
+  max-height: 72px;
   padding: 30px 18px 7px 18px;
   text-align: right;
 `;
 
 const Display = ({ value }: DisplayProps) => {
   const formattedValue = formatValue(value);
-  return <Wrapper value={formattedValue}>{formattedValue}</Wrapper>;
+  return (
+    <Wrapper value={formattedValue}>
+      <div>{formattedValue}</div>
+    </Wrapper>
+  );
 };
 
 export default Display;
