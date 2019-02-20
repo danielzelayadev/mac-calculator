@@ -12,3 +12,7 @@ At any rate, I'm very happy with the result. **Do let me know if you find any bu
 - You can use the keyboard to input Numbers, Decimal Point, Backspace, Operators
 - Typing Enter will compute the operation
 - C will clear the operation
+
+## Screenshots
+
+![ss1](./screenshots/desktop.png)
