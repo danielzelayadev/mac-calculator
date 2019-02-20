@@ -9,7 +9,7 @@ ReactDOM.render(
     <h1 className="title">React Mac Calculator</h1>
     <MacCalculator />
     <div className="credits-ctr">
-      <p className="credits">Made with 💙 by Daniel Zelaya.</p>
+      <p className="credits">Made with 💙by Daniel Zelaya.</p>
     </div>
   </div>,
   document.getElementById('root')
