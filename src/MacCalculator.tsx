@@ -8,6 +8,17 @@ import Control from './components/Control';
 const Wrapper = styled.div`
   background-color: #444;
   border-radius: 4px;
+  margin: auto;
+
+  @media screen and (min-width: 476px) {
+    width: 70%;
+  }
+  @media screen and (min-width: 768px) {
+    width: 55%;
+  }
+  @media screen and (min-width: 1024px) {
+    width: 30%;
+  }
 `;
 
 const BottomLeftControl = styled(Control)`
