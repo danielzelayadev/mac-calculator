@@ -129,6 +129,23 @@ const MacCalculator = () => {
     setInputStarted(false);
   };
 
+  const handleEqual = () => {
+    if (readRight) {
+      const result = calculateResult({
+        ...operation,
+        right: inputStarted ? Number(displayValue) : operation.left
+      });
+
+      setOperation({
+        ...operation,
+        left: result
+      });
+      setDisplayValue(result.toString());
+    }
+
+    setInputStarted(false);
+  };
+
   const handleClear = () => {
     if (allClear) return;
     setDisplayValue('0');
@@ -275,6 +292,7 @@ const MacCalculator = () => {
             bgColor={operatorColumnBgColor}
             column={4}
             row={5}
+            onClick={handleEqual}
           >
             =
           </BottomRightControl>
