@@ -1,0 +1,30 @@
+body {
+  background-color: #dcdee2;
+  font-family: 'News Cycle', sans-serif;
+}
+
+.title {
+  display: block;
+  font-size: 44px;
+  color: #fff;
+  text-align: center;
+  margin: 35px 0;
+}
+
+.credits-ctr {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin-top: 35px;
+}
+
+.credits {
+  color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    margin-top: 45px;
+  }
+}
