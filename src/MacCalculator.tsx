@@ -27,8 +27,8 @@ type Operation = {
 const calculateResult = ({ left, operator, right }: Operation) => {
   if (operator === '+') return left + right;
   if (operator === '-') return left - right;
-  if (operator === 'x') return left * right;
-  if (operator === '÷') return left / right;
+  if (operator === 'x' || operator === '*') return left * right;
+  if (operator === '÷' || operator === '/') return left / right;
 
   return left;
 };
@@ -44,6 +44,7 @@ const MacCalculator = () => {
   const [operation, setOperation] = useState(initialOperation);
   const [readRight, setReadRight] = useState(false);
   const [inputStarted, setInputStarted] = useState(false);
+  const [operationSolved, setOperationSolved] = useState(false);
 
   const initialControlsBgColor = '#555';
   const initialControlsActiveBgColor = '#777';
@@ -56,6 +57,7 @@ const MacCalculator = () => {
 
     setAllClear(false);
     setInputStarted(true);
+    setOperationSolved(false);
   };
   const handleDot = () => {
     if (displayValue.includes('.')) return;
@@ -65,11 +67,12 @@ const MacCalculator = () => {
 
     setAllClear(false);
     setInputStarted(true);
+    setOperationSolved(false);
   };
   const handleNegation = () => {
     if (Number(displayValue) === 0) return;
 
-    if (inputStarted) {
+    if (inputStarted || operationSolved) {
       if (displayValue[0] === '-') setDisplayValue(displayValue.substr(1));
       else setDisplayValue(`-${displayValue}`);
     } else setDisplayValue('0');
@@ -82,7 +85,7 @@ const MacCalculator = () => {
 
     if (value === 0) return;
 
-    if (!inputStarted) setDisplayValue('0');
+    if (!inputStarted && !operationSolved) setDisplayValue('0');
     else {
       const result = value / 100;
       setDisplayValue(result.toString());
@@ -92,11 +95,14 @@ const MacCalculator = () => {
     setInputStarted(true);
   };
   const handleDelete = () => {
+    if (operationSolved) return;
+
     if (!inputStarted) {
       setDisplayValue('0');
       setInputStarted(true);
       return;
     }
+
     if (displayValue.length > 1)
       setDisplayValue(displayValue.substr(0, displayValue.length - 1));
     else if (displayValue !== '0') setDisplayValue('0');
@@ -127,23 +133,22 @@ const MacCalculator = () => {
     }
 
     setInputStarted(false);
+    setOperationSolved(false);
   };
 
   const handleEqual = () => {
-    if (readRight) {
-      const result = calculateResult({
-        ...operation,
-        right: inputStarted ? Number(displayValue) : operation.left
-      });
+    const result =
+      readRight && inputStarted
+        ? calculateResult({
+            ...operation,
+            right: Number(displayValue)
+          })
+        : Number(displayValue);
 
-      setOperation({
-        ...operation,
-        left: result
-      });
-      setDisplayValue(result.toString());
-    }
-
+    setReadRight(false);
     setInputStarted(false);
+    setOperationSolved(true);
+    setDisplayValue(result.toString());
   };
 
   const handleClear = () => {
@@ -153,6 +158,7 @@ const MacCalculator = () => {
     setOperation(initialOperation);
     setReadRight(false);
     setInputStarted(false);
+    setOperationSolved(false);
   };
 
   useEffect(() => {
@@ -161,11 +167,15 @@ const MacCalculator = () => {
       const isC = key === 'c' || key === 'C';
       const isDot = key === '.';
       const isPercent = key === '%';
+      const isOperator = ['+', '-', '*', '/'].includes(key);
+      const isEqual = key === '=' || which === 13;
 
       if (isNumber) handleNumber(key);
       else if (isC) handleClear();
       else if (isDot) handleDot();
       else if (isPercent) handlePercent();
+      else if (isOperator) handleOperator(key);
+      else if (isEqual) handleEqual();
     };
     window.addEventListener('keypress', handleKeypress);
     return () => window.removeEventListener('keypress', handleKeypress);
